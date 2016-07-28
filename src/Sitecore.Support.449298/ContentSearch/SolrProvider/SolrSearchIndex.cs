@@ -16,6 +16,11 @@ namespace Sitecore.Support.ContentSearch.SolrProvider
         {
         }
 
+        public SolrSearchIndex(string name, string core, IIndexPropertyStore propertyStore, string group)
+            : base(name, core, propertyStore, group)
+        {
+        }
+
         public override void Initialize()
         {
             if (SolrStatus.InitStatusOk)
