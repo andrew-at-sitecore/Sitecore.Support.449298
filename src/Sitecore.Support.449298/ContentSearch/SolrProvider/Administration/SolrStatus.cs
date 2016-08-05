@@ -1,17 +1,30 @@
 ﻿namespace Sitecore.Support.ContentSearch.SolrProvider.Administration
 {
-  using Diagnostics;
-  using Sitecore.ContentSearch.SolrProvider;
-  using SolrNet;
-  using SolrNet.Exceptions;
+    using Diagnostics;
+    using Sitecore.ContentSearch.SolrProvider;
+    using SolrNet;
+    using SolrNet.Exceptions;
+    using System.Collections.Generic;
+    using System.Threading;
 
-  public static class SolrStatus
+    public static class SolrStatus
     {
         static SolrStatus()
         {
             InitStatusOk = OkSolrStatus();
+            IndexListForReinitialization = new List<SolrSearchIndex>();
         }
         public static bool InitStatusOk { get; }
+
+        public static void RegisterIndexForReinitialization(Sitecore.ContentSearch.SolrProvider.SolrSearchIndex solrIndex)
+        {
+            if (solrIndex != null)
+            {
+                IndexListForReinitialization.Add(solrIndex);
+            }
+        }
+
+        public static List<SolrSearchIndex> IndexListForReinitialization { get; private set; }
 
         public static bool OkSolrStatus()
         {
@@ -21,15 +34,17 @@
                 if (solrAdmin != null)
                 {
                     var list = solrAdmin.Status();
+                } else {
+                    return false; // solrAdmin is NULL - assume SOLR is not available
                 }
                 return true;
             }
             catch (SolrConnectionException solrException)
             {
-                Log.Warn(
+                Trace.Warn(
                     $"SUPPORT : Unable to connect to Solr: [{SolrContentSearchManager.ServiceAddress}], " +
                     $"the [{typeof (SolrConnectionException).FullName}] was caught.",
-                    solrException, new object());
+                    solrException);
                 return false;
             }
         }
