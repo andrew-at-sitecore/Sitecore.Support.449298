@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Sitecore.Support.449298")]
+[assembly: AssemblyTitle("Sitecore.Support.449298 8.1")]
 [assembly: AssemblyDescription("Sitecore Support Patch #449298. Fixes issues 391039,442441,426716.")]
 [assembly: AssemblyCompany("Sitecore Corporation")]
 [assembly: AssemblyProduct("Sitecore.Support.449298")]
