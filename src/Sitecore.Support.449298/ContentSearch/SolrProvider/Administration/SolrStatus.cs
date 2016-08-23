@@ -20,7 +20,13 @@
         {
             if (solrIndex != null)
             {
-                IndexListForReinitialization.Add(solrIndex);
+                if (!IndexListForReinitialization.Contains(solrIndex))
+                {
+                    IndexListForReinitialization.Add(solrIndex);
+                } else
+                {
+                    Trace.Warn($"Index re-initialization list already contains '{solrIndex.Name}' index. Skipping this operation to avoid duplicating the entry.");
+                }
             }
         }
 
